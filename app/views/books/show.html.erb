@@ -1,0 +1,35 @@
+<h1>投稿詳細</h1>
+<table>
+  <tr>
+    <th>タイトル</th>
+    <td><%= @book.title %></td>
+  </tr>
+  <tr>
+    <th>本文</th>
+    <td><%= @book.body %></td>
+  </tr>
+  <tr>
+    <th>ユーザー名</th>
+    <td><%= @book.user.name %></td>
+  </tr>
+  <tr>
+    <th>編集</th>
+    <td><%= link_to "edit", edit_book_path %></td>
+  </tr>
+  <tr>
+    <th>削除</th>
+    <td><%=link_to "削除", book_path(@book), method: :delete, "data_confirm" => "本当に削除しますか" %></td>
+</table>
+<% if @book.favorited_by?(current_user) %>
+<p>
+  <%= link_to book_favorites_path(@book), method: :delete do %>
+    ♥<%= @book.favorites.count %> いいね
+  <% end %>
+</p>
+<% else %>
+<p>
+  <%= link_to book_favorites_path(@book), method: :post do %>
+    ♡<%= @book.favorites.count %> いいね
+  <% end %>
+</p>
+<% end %>
